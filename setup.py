@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='talk2linux',
-    version='0.1.0b0',
+    version='v0.1.0-beta0.1.2',
     description='A Command Line Interface for interacting with Linux systems using OpenAI',
     author='Phosphorus',
     author_email='bailinwp4@163.com',
