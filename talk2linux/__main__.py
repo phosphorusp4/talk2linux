@@ -18,6 +18,8 @@ BLUE = "\033[94m"
 class Talk2Linux:
     def __init__(self):
 
+        self.query = {"role": "system", "content": ""}
+
         self.request_interval = 1
 
         self.config_dir = os.path.join(os.path.expanduser('~'), '.config', 'talk2linux')
@@ -87,7 +89,7 @@ class Talk2Linux:
         with open(self.history_path, 'w') as f:
             json.dump(self.prompt, f, indent=4)
 
-    def chat(self, query: str, retry_count: int = 0, max_retries: int = 3, max_context_length: int = 5) -> str:
+    def chat(self, query: str, retry_count: int = 0, max_retries: int = 3, max_context_length: int = 10) -> str:
 
         self.history.append({
             "role": "user",
@@ -96,10 +98,9 @@ class Talk2Linux:
 
         if len(self.history) > max_context_length:
             prompt = self.prompt[0]
-            query = self.history[1]
             self.history = self.history[- max_context_length:]
             self.history.insert(0, prompt)
-            self.history.insert(1, query)
+            self.history.insert(1, self.query)
 
         try:
             completion = self.llm_client.chat.completions.create(
@@ -117,7 +118,7 @@ class Talk2Linux:
                 print(f"{YELLOW}[W]Failed to generate response, retrying... ({retry_count}/{max_retries}){RESET}")
 
                 if len(self.history) > 1:
-                    self.history = [self.prompt[0], self.history[1], self.history[-2], self.history[-1]]
+                    self.history = [self.prompt[0], self.query, self.history[-2], self.history[-1]]
                 else:
                     self.history = self.prompt
                 self.save_conversation()
@@ -135,7 +136,10 @@ class Talk2Linux:
         })
 
         if len(self.history) > max_context_length:
+            prompt = self.prompt[0]
             self.history = self.history[- max_context_length:]
+            self.history.insert(0, prompt)
+            self.history.insert(1, self.query)
 
         self.save_conversation()
 
@@ -198,6 +202,7 @@ class Talk2Linux:
         return ''.join(results)
 
     def run(self, query):
+        self.query["content"] = query
         first_query = True
         chat_result = self.chat("<h>" + query + "</h>")
         if chat_result == "Failed":
@@ -225,7 +230,7 @@ def main():
         parser.add_argument('--change-apikey', type=str, help='Change the API Key')
         parser.add_argument('--change-url', type=str, help='Change the URL')
         parser.add_argument('-e', '--erase-history', action='store_true', help='Erase the conversation history')
-        parser.add_argument('-v', '--version', action='version', version='0.1.0a1')
+        parser.add_argument('-v', '--version', action='version', version='v0.1.0-beta0.1.2')
         parser.add_argument('query', type=str, nargs='?', help='The query to be processed')
 
         args = parser.parse_args()
@@ -254,19 +259,22 @@ def main():
         if args.erase_history:
             talk_to_linux.clear_history()
             print("Conversation history erased.")
+            sys.exit(0)  # 直接退出程序，不再尝试运行查询
 
         # 检查是否提供了 --change-apikey 或 --change-url 参数
         if args.change_apikey or args.change_url:
             if args.query is not None:
                 talk_to_linux.run(args.query)
         else:
-            if args.query is None:
+            if args.query is None and not args.erase_history:
                 parser.error("query is required when neither --change-apikey nor --change-url is provided.")
             else:
                 talk_to_linux.run(args.query)
     except KeyboardInterrupt:
         print(f"{RED}User Interrupt{RESET}")
         sys.exit(0)
+
+
 
 if __name__ == "__main__":
     main()
