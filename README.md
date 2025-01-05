@@ -1,3 +1,87 @@
+
+# Talk2Linux(English Version)
+## Overview
+Talk2Linux is a command-line interface (CLI) that enables interaction with Linux systems through OpenAI. It allows users to describe their needs in natural language, and then generates and executes corresponding Linux commands to fulfill these needs. This project aims to simplify the management and operation of Linux systems, enabling users to complete tasks more efficiently.
+
+## Features
+- **Natural Language Interaction**: Users can describe their needs in natural language without having to memorize complex commands.
+- **Command Generation**: Generates executable Linux commands based on user input.
+- **Command Execution**: Automatically executes generated commands and displays the results.
+- **History Record**: Saves conversation history for easy review and reuse of previous commands.
+- **Security Check**: Built-in list of prohibited instructions to prevent dangerous commands from being executed.
+
+## This project is currently in development, there may be some problems, **please do not use it in production environment.**
+
+## Installation
+### Prerequisites
+- Python 3.6 or higher
+- OpenAI API key
+
+### Installation Steps
+#### Clone Repository:
+
+```
+sh
+git clone https://github.com/phosphorusp4/talk2linux.git
+cd talk2linux
+```
+#### Install：
+
+```
+sh
+python setup.py install
+```
+
+## Usage
+### Basic Usage
+#### Run CLI：
+
+```
+sh
+talk2 "Your need description"
+```
+#### View the help information：
+
+```
+sh
+talk2 --help
+```
+### Advanced Usage
+
+#### Change API Key：
+
+```
+sh
+talk2 --change-apikey "New API key"
+```
+#### Change OpenAI URL：
+```
+sh
+talk2 --change-url "New URL"
+```
+#### Erase History：
+
+```
+sh
+talk2 --erase-history
+```
+## Configuration
+
+- API key and URL
+The API key and URL will prompt you to enter an OpenAI API key and URL on the first run. You can also change these settings through command-line arguments or configuration files.
+
+- Banned Instructions
+Prohibited instruction list: By default, the list includes poweroff, rm -rf, nano, and vim. You can customize this list in the ~/.config/talk2linux/banned_instructions.json file.
+
+## History
+Conversation history is saved by default in the ~/.config/talk2linux/history.json file. You can view or clear the history at any time.
+
+## License
+MIT License
+
+## Contact
+If you have any questions or suggestions, please contact bailinwp4@163.com.
+
 # Talk2Linux(Chinese Version)
 ## Overview
 Talk2Linux 是一个命令行界面（CLI），用于通过 OpenAI 与 Linux 系统交互。它允许用户以自然语言描述他们的需求，然后生成并执行相应的 Linux 命令来满足这些需求。这个项目旨在简化 Linux 系统的管理和操作，使用户能够更高效地完成任务。
@@ -85,87 +169,3 @@ MIT License
 
 ## Contact
 如果有任何问题或建议，请联系 bailinwp4@163.com。
-
-# Talk2Linux(English Version)
-## Overview
-Talk2Linux is a command-line interface (CLI) that enables interaction with Linux systems through OpenAI. It allows users to describe their needs in natural language, and then generates and executes corresponding Linux commands to fulfill these needs. This project aims to simplify the management and operation of Linux systems, enabling users to complete tasks more efficiently.
-
-## Features
-- **Natural Language Interaction**: Users can describe their needs in natural language without having to memorize complex commands.
-- **Command Generation**: Generates executable Linux commands based on user input.
-- **Command Execution**: Automatically executes generated commands and displays the results.
-- **History Record**: Saves conversation history for easy review and reuse of previous commands.
-- **Security Check**: Built-in list of prohibited instructions to prevent dangerous commands from being executed.
-
-## This project is currently in development, there may be some problems, **please do not use it in production environment.**
-
-## Installation
-### Prerequisites
-- Python 3.6 or higher
-- OpenAI API key
-
-### Installation Steps
-#### Clone Repository:
-
-```
-sh
-git clone https://github.com/phosphorusp4/talk2linux.git
-cd talk2linux
-```
-#### Install：
-
-```
-sh
-python setup.py install
-```
-
-## Usage
-### Basic Usage
-#### Run CLI：
-
-```
-sh
-talk2 "Your need description"
-```
-#### View the help information：
-
-```
-sh
-talk2 --help
-```
-### Advanced Usage
-
-#### Change API Key：
-
-```
-sh
-talk2 --change-apikey "New API key"
-```
-#### Change OpenAI URL：
-```
-sh
-talk2 --change-url "New URL"
-```
-#### Erase History：
-
-```
-sh
-talk2 --erase-history
-```
-## Configuration
-
-- API key and URL
-The API key and URL will prompt you to enter an OpenAI API key and URL on the first run. You can also change these settings through command-line arguments or configuration files.
-
-- Banned Instructions
-Prohibited instruction list: By default, the list includes poweroff, rm -rf, nano, and vim. You can customize this list in the ~/.config/talk2linux/banned_instructions.json file.
-
-## History
-Conversation history is saved by default in the ~/.config/talk2linux/history.json file. You can view or clear the history at any time.
-
-## License
-MIT License
-
-## Contact
-If you have any questions or suggestions, please contact bailinwp4@163.com.
-
