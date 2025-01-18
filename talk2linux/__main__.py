@@ -160,6 +160,10 @@ class Talk2Linux:
                 results.append("[W]Detected prohibited instruction:" + command.strip() + ",Execution skipped,don't try to execute it again,and don't execute instruction which Similar to it.")
                 continue
 
+            #如果命令是'''或"""则跳过
+            if command == "'''" or """""":
+                continue
+
             # 如果命令是空行，则跳过
             if not command.strip():
                 continue
